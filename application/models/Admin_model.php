@@ -1,6 +1,9 @@
 <?php 
 	class Admin_model extends CI_Model
 	{	
+		public function __construct(){
+		$this->load->database();	
+		}
 		//Model untuk data Dashboard	
 		public function get_DataAdmin($user,$pass){
 			$query = $this->db->get_where('admin', array('username' => $user), 1, 0);
@@ -51,4 +54,8 @@
 		}
 
 		//MModel untuk data User
+		public function create_user($ktp,$nama,$username,$email,$gender,$pass){
+		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
+		return $query;
+		}
 	}
