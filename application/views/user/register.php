@@ -4,7 +4,7 @@
 	<form method="POST">
 		<div class="form-group" >
 			<label>No.KTP:</label>
-			<input type="text" class="form-control" id="noktp" name="ktp" required>
+			<input type="text" class="form-control" id="noktp" name="noktp" required>
 		</div>
 		<div class="form-group" >
 			<label>Nama Lengkap:</label>

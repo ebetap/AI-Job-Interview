@@ -47,6 +47,15 @@
 				
 				$daftar = $this->User_model->registrasi($ktp,$nama,$username,$email,$gender,$pass);
 
+				if ($daftar) {
+				$this->session->set_userdata('username', $username);
+				redirect('/home');
+				} else
+				{
+					$this->session->set_flashdata('item', 'Authentication Error');
+					redirect('user/login');
+				}
+
 			}
 			$this->load->view('templates/user/header');
 			$this->load->view('user/register');
