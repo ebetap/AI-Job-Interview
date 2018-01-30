@@ -31,6 +31,4 @@
 		<blockquote class="blockquote-reverse">
 		Already have an account? <a href="<?php echo base_url(); ?>/user/login">Login here</a>	
 		</blockquote>
-		 
-	</form>	
-</div>
+	</form>

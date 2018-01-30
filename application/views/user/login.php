@@ -1,12 +1,11 @@
-<div class="container header">
-	<h2 class="text-center">Form Login</h2>
+<div class="container" style="padding-top: 70px;">
 		
 	<?php 
 	if ($pesan = $this->session->flashdata('item')) {
 		echo $pesan;
 	}
 	 ?>
-
+	
 	<form class="formregis" method="POST">
 		<div class="form-group">
 			<label>Username:</label>
