@@ -17,6 +17,16 @@
     <script src="<?php echo base_url(); ?>/assets/resource/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
     <script src="<?php echo base_url(); ?>/assets/resource/vendors/nprogress/nprogress.js"></script>
+    <!-- jQuery Smart Wizard -->
+    <script src="<?php echo base_url(); ?>/assets/resource/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="<?php echo base_url(); ?>/assets/resource/build/js/custom.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="<?php echo base_url(); ?>/assets/resource/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="<?php echo base_url(); ?>/assets/resource/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="<?php echo base_url(); ?>/assets/resource/vendors/nprogress/nprogress.js"></script>
     <!-- Chart.js -->
     <script src="<?php echo base_url(); ?>/assets/resource/vendors/Chart.js/dist/Chart.min.js"></script>
     <!-- gauge.js -->

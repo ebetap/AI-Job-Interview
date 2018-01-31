@@ -16,7 +16,7 @@
 			<input type="password" placeholder="Password" class="form-control" id="password" name="password" required>
 		</div>
 
-		<button type="submit" class="btn btn-primary" name="submit">Login</button><br><br>
+		<button type="submit" class="btn btn-success" name="submit">Login</button><br><br>
 		<blockquote class="blockquote-reverse">
 		Don't have an account? <a href="<?php echo base_url(); ?>register">Sign Up Here</a>	
 		</blockquote>

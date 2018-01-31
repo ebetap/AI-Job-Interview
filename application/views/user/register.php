@@ -1,3 +1,4 @@
+
 <div class="container header">
 <h2 class="text-center">Form Registrasi</h2>
 
@@ -27,7 +28,7 @@
 			<label>Password:</label>
 			<input type="password" placeholder="Password" class="form-control" id="password" name="password" required>
 		</div>
-		<button type="submit" class="btn btn-primary" name="submit">Sign up</button><br>
+		<button type="submit" class="btn btn-success" name="submit">Sign up</button><br>
 		<blockquote class="blockquote-reverse">
 		Already have an account? <a href="<?php echo base_url(); ?>/user/login">Login here</a>	
 		</blockquote>
