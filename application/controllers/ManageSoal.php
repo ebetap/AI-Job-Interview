@@ -30,8 +30,14 @@
 			$this->load->view('templates/admin/footer');
 		}
 		public function read(){
+			$this->load->model('Admin_model');
+
+			$soal = $this->Admin_model->read_soal();
+
+			$data['soal'] = $soal;
+
 			$this->load->view('templates/admin/dashboard');
-			$this->load->view('admin/manage/soal/read');
+			$this->load->view('admin/manage/soal/read',$data);
 			$this->load->view('templates/admin/footer');	
 		}
 		public function update(){

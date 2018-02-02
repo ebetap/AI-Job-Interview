@@ -49,13 +49,42 @@
 
 		//Model untuk data Soal
 		public function create_soal($soal,$jawab1,$jawab2,$jawab3,$jawab4,$jawab5,$jawab6){
-		$query = $this->db->insert('t_soal', array('soal' => $soal,'system_answer' => $jawab1,'system_answer2' => $jawab2,'system_answer3' => $jawab3,'system_answer4' => $jawab4,'system_answer5' => $jawab5,'system_answer6' => $jawab6));
-		return $query;
+			$query = $this->db->insert('t_soal', array('soal' => $soal,'system_answer' => $jawab1,'system_answer2' => $jawab2,'system_answer3' => $jawab3,'system_answer4' => $jawab4,'system_answer5' => $jawab5,'system_answer6' => $jawab6));
+			return $query;
+		}
+
+		public function read_soal(){
+			$query = $this->db->query('SELECT * FROM t_soal');
+
+			return $query->result_array();
+		}
+
+		public function update_soal(){
+			
+		}
+
+		public function delete_soal(){
+
 		}
 
 		//MModel untuk data User
 		public function create_user($ktp,$nama,$username,$email,$gender,$pass){
-		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
-		return $query;
+			$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
+			return $query;
 		}
+
+		public function read_user(){
+			$query = $this->db->query('SELECT * FROM t_user');
+
+			return $query->result_array();
+		}
+
+		public function update_user(){
+			
+		}
+
+		public function delete_user(){
+
+		}
+
 	}

@@ -28,8 +28,14 @@
 			$this->load->view('templates/admin/footer');
 		}
 		public function read(){
+			$this->load->model('Admin_model');
+
+			$user = $this->Admin_model->read_user();
+
+			$data['user'] = $user;
+
 			$this->load->view('templates/admin/dashboard');
-			$this->load->view('admin/manage/user/read');
+			$this->load->view('admin/manage/user/read',$data);
 			$this->load->view('templates/admin/footer');
 		}
 		public function update(){
