@@ -48,8 +48,8 @@
 		}
 
 		//Model untuk data Soal
-		public function create_soal($soal,$jawab1,$jawab2,$jawab3,$jawab4,$jawab5,$jawab6){
-			$query = $this->db->insert('t_soal', array('soal' => $soal,'system_answer' => $jawab1,'system_answer2' => $jawab2,'system_answer3' => $jawab3,'system_answer4' => $jawab4,'system_answer5' => $jawab5,'system_answer6' => $jawab6));
+		public function create_soal($data){
+			$query = $this->db->insert('t_soal', $data);
 			return $query;
 		}
 
@@ -59,17 +59,23 @@
 			return $query->result_array();
 		}
 
-		public function update_soal(){
-			
+		public function update_soal($data,$nomor){
+			$this->db->where('no',$nomor);
+			$query = $this->db->update('t_soal',$data);
+
+			return $query;
 		}
 
-		public function delete_soal(){
+		public function delete_soal($nomor){
+			$this->db->where('no',$nomor);
+			$query = $this->db->delete('t_soal');
 
+			return $query;
 		}
 
 		//MModel untuk data User
-		public function create_user($ktp,$nama,$username,$email,$gender,$pass){
-			$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
+		public function create_user($data){
+			$query = $this->db->insert('t_user',$data);
 			return $query;
 		}
 
@@ -79,12 +85,18 @@
 			return $query->result_array();
 		}
 
-		public function update_user(){
-			
+		public function update_user($data,$id){
+			$this->db->where('userID',$id);
+			$query = $this->db->update('t_user',$data);
+
+			return $query;
 		}
 
-		public function delete_user(){
+		public function delete_user($id){
+			$this->db->where('userID',$id);
+			$query = $this->db->delete('t_user');
 
+			return $query;
 		}
 
 	}
