@@ -2,7 +2,6 @@
 <html>
 <head>
 	<title>HRD Online</title>
-	<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/style.css">
 	<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/css/bootstrap.min.css">
 	<style type="text/css">
 		.container .header{

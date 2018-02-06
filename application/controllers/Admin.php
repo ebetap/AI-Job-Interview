@@ -1,8 +1,7 @@
 <?php 
 	class admin extends CI_Controller 
 	{
-		public function login()
-		{	
+		public function login(){	
 			//redirect kalo dah login
 			if ($sesi = $this->session->username) {
 				redirect('admin/home');
@@ -28,8 +27,7 @@
 			$this->load->view('templates/admin/footer');
 		}
 
-		public function logout()
-		{
+		public function logout(){
 			$this->session->sess_destroy();
 			redirect('admin');
 		}
@@ -64,13 +62,33 @@
 				'persenwanita' => $persentase['persenwanita'],
 				'persenlolos' => $persentase['persenlolos'],
 				'persengagal' => $persentase['persengagal']
-
 				 );
 
-			$this->load->view('templates/admin/dashboard',$data);
+			$this->load->view('templates/admin/dashboard');
 			$this->load->view('admin/'.$page,$data);
 			$this->load->view('templates/admin/footer');
+		}
 
+		public function result(){
+			if (!$sesi = $this->session->username) {
+			redirect('admin/login');
+			}
+			$this->load->model('Admin_model');
+			$read = $this->Admin_model->read_user();
+			$lolos = $this->Admin_model->result_lolos();
+			$gagal = $this->Admin_model->result_gagal();
+			$belum = $this->Admin_model->result_belum();
+
+
+			
+			$data['lolos'] = $lolos;
+			$data['gagal'] = $gagal;
+			$data['user'] = $read;
+			$data['belum']= $belum;
+
+			$this->load->view('templates/admin/dashboard');
+			$this->load->view('admin/result',$data);
+			$this->load->view('templates/admin/footer');
 		}
 
 

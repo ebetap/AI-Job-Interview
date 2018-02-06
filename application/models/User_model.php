@@ -6,7 +6,7 @@
 		}
 
 		public function registrasi($ktp,$nama,$username,$email,$gender,$pass){
-		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
+		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass, 'result' => "belum mengerjakan"));
 		return $query;
 		}
 		

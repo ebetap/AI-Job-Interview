@@ -9,6 +9,9 @@ $route['default_controller'] = 'user/view';
 //---------------ADMIN---------------
 $route['admin'] = 'admin/login';
 $route['admin/home'] = 'admin/home';
+
+$route['admin/interview/result'] = 'admin/result';
+
 //manage user
 $route['admin/manage/user/create'] = 'manageuser/create';
 $route['admin/manage/user/read'] = 'manageuser/read';
