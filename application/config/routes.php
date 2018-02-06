@@ -26,6 +26,7 @@ $route['admin/manage/soal/delete'] = 'managesoal/delete';
 //---------------USER---------------
 $route['about'] = 'user/view/about';
 $route['(:any)'] = 'user/$1';
+$route['interview'] = 'user/interview';
 
 //---------------CI---------------
 $route['404_override'] = '';

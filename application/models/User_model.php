@@ -31,4 +31,9 @@
 
 			return $row;
 		}
+		public function get_system_answer(){
+			$query = $this->db->query('SELECT system_answer,system_answer2,system_answer3,system_answer4,system_answer5,system_answer6 FROM t_soal');
+
+			return $query->result_array();
+		}
 	}

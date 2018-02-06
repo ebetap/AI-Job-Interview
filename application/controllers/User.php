@@ -1,8 +1,7 @@
 <?php 
 	class User extends CI_Controller 
 	{
-		public function view($page = 'index')
-		{
+		public function view($page = 'index'){
 			if (!file_exists(APPPATH.'views/user/'.$page.'.php')) {
 				show_404();
 			}
@@ -13,8 +12,7 @@
 			$this->load->view('templates/user/footer');
 		}
 
-		public function home($page = 'home')
-		{	
+		public function home($page = 'home'){	
 			if (!$sesi = $this->session->username) {
 				redirect('user/login');
 			}
@@ -29,8 +27,7 @@
 			$this->load->view('templates/user/footer');
 		}
 
-		public function register()
-		{
+		public function register(){
 			if ($sesi = $this->session->username) {
 				redirect('/home');
 			}
@@ -61,8 +58,7 @@
 			$this->load->view('templates/user/footer');
 		}
 
-		public function login()
-		{	
+		public function login(){	
 			//redirect kalo dah login
 			if ($sesi = $this->session->username) {
 				redirect('/home');
@@ -88,14 +84,12 @@
 			$this->load->view('templates/user/footer');
 		}
 
-		public function logout()
-		{
+		public function logout(){
 			$this->session->sess_destroy();
 			redirect('/user/login');
 		}
 
-		public function profil()
-		{
+		public function profil(){
 			if (!$sesi = $this->session->username) {
 				redirect('user/login');
 			}
@@ -109,8 +103,29 @@
 			$this->load->view('templates/user/footer');
 		}
 
-		public function test()
-		{
+		public function interview(){
+			$this->load->model('Admin_model');
+			$this->load->model('User_model');
 
+			if (!$sesi = $this->session->username) {
+				redirect('user/login');
+			}
+
+			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+				$jawab = $this->input->post('answer');
+				$system_answer = $this->User_model->get_system_answer();
+				foreach ($jawab as $anu) {
+					$answer [] = $anu;
+				}
+				var_dump($answer);
+				exit;
+			}
+			$soal = $this->Admin_model->read_soal();	
+
+			$data['soal'] = $soal;
+
+			$this->load->view('templates/user/dashboard');
+			$this->load->view('user/interview',$data);
+			$this->load->view('templates/user/footer');
 		}			
 	}
