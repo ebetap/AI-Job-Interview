@@ -114,11 +114,117 @@
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$jawab = $this->input->post('answer');
 				$system_answer = $this->User_model->get_system_answer();
-				foreach ($jawab as $anu) {
-					$answer [] = $anu;
+				$stop_word = $this->User_model->get_stopword();
+				$stopword = array();
+
+				foreach ($stop_word as $key => $value) 
+				{
+					foreach ($value as $key1 => $value1) 
+					{
+						$stopword[] = $value1;
+					}
 				}
-				var_dump($answer);
-				exit;
+
+				foreach ($jawab as $value){
+					$answer [] = $value;
+				}
+
+				foreach ($answer as $key => $value) 
+				{
+					$parser[] = strtolower(preg_replace('/[^a-zA-Z ]/', '',$value));
+				}
+				foreach ($parser as $key => $value) 
+				{
+					$filter[] = preg_replace('/\b('.implode('|',$stopword).')\b/','',$value);
+				}
+				
+				foreach ($filter as $key => $value) 
+				{
+					$stm[] = str_word_count($value, 1);
+				}
+
+				foreach ($stm as $key => $value) 
+				{
+					foreach ($value as $key1 => $value1) 
+					{
+						$stmm[$key][]= hapusakhiran(hapusawalan2(hapusawalan1(hapuspp(hapuspartikel($value1))))); 
+					}
+				}
+				foreach ($stmm as $key => $value) 
+				{
+					$steamming[]= implode(' ', $value); 
+				}
+				var_dump($stemming);
+				exit();
+				foreach ($steamming as $key => $value) 
+				{
+					$no_space[] = preg_replace('/\s+/', '', $value);
+				}
+				 		for($i = 0; $i < count($no_space); $i++)
+				{
+				$kgram_2[$i] = array();				    
+					for($j = 0; $j < (strlen($no_space[$i]) - 1); $j++)
+					{	
+					   $kgram_2[$i][] = substr($no_space[$i], $j, 2);
+					}
+				}
+				$change_to_ascii_indek_0 = array();
+				foreach ($kgram_2 as $key => $value) 
+				{
+					foreach ($value as $key1 => $value1) 
+					{
+						$change_to_ascii_indek_0[$key][] = ord($value1[0])*10;
+					}
+				}
+				$change_to_ascii_indek_1 = array();
+				foreach ($kgram_2 as $key => $value) 
+				{
+					foreach ($value as $key1 => $value1) 
+					{
+						$change_to_ascii_indek_1[$key][] = ord($value1[1])*1;
+					}
+				}
+				$plus_indek_0_and_indek_1 = array();
+				for($i = 0; $i < count($no_space); $i++)
+				{
+					for($j = 0; $j < (strlen($no_space[$i]) -1); $j++) 
+					{
+				  		$plus_indek_0_and_indek_1[$i][$j] = $change_to_ascii_indek_0[$i][$j] + $change_to_ascii_indek_1[$i][$j];
+				  	}
+				}
+				$count_same_value = array();
+				foreach ($plus_indek_0_and_indek_1_system as $key => $value) 
+				{
+					$count_same_value[] = count(array_intersect($value, $plus_indek_0_and_indek_1_user[$key]));
+				}
+				$sum_array_user = array();
+					for($i = 0; $i < count($no_space_user); $i++)
+					{
+						for($j = 0; $j < (strlen($no_space_user[$i]) -1); $j++) 
+						{
+							$sum_array_user[$i] = count($plus_indek_0_and_indek_1_user[$i]);
+						}
+					}
+
+				$sum_array_system = array();
+					for($i = 0; $i < count($no_space_system); $i++)
+					{
+						for($j = 0; $j < (strlen($no_space_system[$i]) -1); $j++) 
+						{
+							$sum_array_system[$i] = count($plus_indek_0_and_indek_1_system[$i]);
+						}
+					}
+			
+				$sum_array = array();
+					foreach ($sum_array_system as $key => $value) 
+					{
+						$count_rkr[] = $value + $sum_array_user[$key];
+					}
+					$textSimilarity = array();
+				foreach ($sum_array as $key => $value) 
+				{
+					$textSimilarity[] = 2*$count_same_value[$key] / $value;
+				}
 			}
 			$soal = $this->Admin_model->read_soal();	
 

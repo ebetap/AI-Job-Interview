@@ -36,4 +36,12 @@
 
 			return $query->result_array();
 		}
+		public function get_stopword(){
+			$query = $this->db->query('SELECT * FROM stopword');
+			return $query->result_array();
+		}
+		public function get_katadasar($kata){
+			$query = $this->db->query("SELECT * FROM tb_katadasar WHERE katadasar='$kata'");
+			return $query->result_array();
+		}
 	}
