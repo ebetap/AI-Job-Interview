@@ -1,15 +1,166 @@
 <?php
-		function cari($kata)
+function parser($answer)
+	{
+		foreach ($answer as $key => $value) 
 		{
-			$this->load->model('User_model');
-			$kata_dasar = $this->User_model->get_katadasar();
-			return $cek;
+			$parser[] = strtolower(preg_replace('/[^a-zA-Z ]/', '',$value));
+		}
+		return $parser;
+	}
+//$stopword = menghilankan kata hubung.contoh = dan, dengan, yang, atau
+	function filter($parser, $stopword)
+	{
+		foreach ($parser as $key => $value) 
+		{
+			$filter[] = preg_replace('/\b('.implode('|',$stopword).')\b/','',$value);
+		}
+		return $filter;
+	}
+//steming = merubah kebentuk kata dasar
+	function steamming($filter)
+	{
+
+		foreach ($filter as $key => $value) 
+		{
+			$stm[] = str_word_count($value, 1);
 		}
 
+		foreach ($stm as $key => $value) 
+		{
+			foreach ($value as $key1 => $value1) 
+			{
+				$stmm[$key][]= hapusakhiran(hapusawalan2(hapusawalan1(hapuspp(hapuspartikel($value1))))); 
+			}
+		}
+
+		foreach ($stmm as $key => $value) 
+		{
+			$steamming[]= implode(' ', $value); 
+		}
+		return $steamming;
+	}
+
+	function no_space($steamming)
+	{
+		foreach ($steamming as $key => $value) 
+		{
+			$no_space[] = preg_replace('/\s+/', '', $value);
+		}
+		return $no_space;
+	}
+
+	function kgram_2($no_space)
+	{
+		for($i = 0; $i < count($no_space); $i++)
+		{
+		$kgram_2[$i] = array();				    
+			for($j = 0; $j < (strlen($no_space[$i]) - 1); $j++)
+			{	
+			   $kgram_2[$i][] = substr($no_space[$i], $j, 2);
+			}
+		}
+		return $kgram_2;
+	}
+
+	function change_to_ascii_indek_0($kgram_2)
+	{
+		$change_to_ascii_indek_0 = array();
+			foreach ($kgram_2 as $key => $value) 
+			{
+				foreach ($value as $key1 => $value1) 
+				{
+					$change_to_ascii_indek_0[$key][] = ord($value1[0])*10;
+				}
+			}
+		return $change_to_ascii_indek_0;
+	}
+
+	function change_to_ascii_indek_1($kgram_2)
+	{
+		$change_to_ascii_indek_1 = array();
+			foreach ($kgram_2 as $key => $value) 
+			{
+				foreach ($value as $key1 => $value1) 
+				{
+					$change_to_ascii_indek_1[$key][] = ord($value1[1])*1;
+				}
+			}
+		return $change_to_ascii_indek_1;
+	}
+
+	function plus_indek_0_and_indek_1($no_space, $change_to_ascii_indek_0, $change_to_ascii_indek_1)
+	{
+		$plus_indek_0_and_indek_1 = array();
+			for($i = 0; $i < count($no_space); $i++)
+			{
+				for($j = 0; $j < (strlen($no_space[$i]) -1); $j++) 
+				{
+			  		$plus_indek_0_and_indek_1[$i][$j] = $change_to_ascii_indek_0[$i][$j] + $change_to_ascii_indek_1[$i][$j];
+			  	}
+			}
+		return $plus_indek_0_and_indek_1;
+	}
+	//membandingkan jawaban user dengan system
+	function count_same_value($plus_indek_0_and_indek_1_user, $plus_indek_0_and_indek_1_system)
+	{
+		$count_same_value = array();
+			foreach ($plus_indek_0_and_indek_1_system as $key => $value) 
+			{
+				$count_same_value[] = count(array_intersect($value, $plus_indek_0_and_indek_1_user[$key]));
+			}
+		return $count_same_value;
+	}
+
+	function sum_array($no_space_user, $no_space_system, $plus_indek_0_and_indek_1_user, $plus_indek_0_and_indek_1_system)
+	{
+		$sum_array_user = array();
+			for($i = 0; $i < count($no_space_user); $i++)
+			{
+				for($j = 0; $j < (strlen($no_space_user[$i]) -1); $j++) 
+				{
+					$sum_array_user[$i] = count($plus_indek_0_and_indek_1_user[$i]);
+				}
+			}
+
+		$sum_array_system = array();
+			for($i = 0; $i < count($no_space_system); $i++)
+			{
+				for($j = 0; $j < (strlen($no_space_system[$i]) -1); $j++) 
+				{
+					$sum_array_system[$i] = count($plus_indek_0_and_indek_1_system[$i]);
+				}
+			}
+	
+		$sum_array = array();
+			foreach ($sum_array_system as $key => $value) 
+			{
+				$count_rkr[] = $value + $sum_array_user[$key];
+			}
+
+		return $sum_array;
+	}
+
+	function textSimilarity($count_same_value, $sum_array)
+	{
+		$textSimilarity = array();
+			foreach ($sum_array as $key => $value) 
+			{
+				$textSimilarity[] = 2*$count_same_value[$key] / $value;
+			}
+		return $textSimilarity;
+	}
+//------------Stemming----------------
+		function cari($kata)
+		{
+			$ci = & get_instance();
+			$ci->load->model('User_model');
+			$kata = $ci->User_model->get_katadasar($kata);
+
+			return $kata;
+		}
 		//langkah 1 - hapus partikel
 		function hapuspartikel($kata)
 		{
-
 			if(cari($kata)!=1)
 			{
 				if((substr($kata, -3) == 'kah' )||

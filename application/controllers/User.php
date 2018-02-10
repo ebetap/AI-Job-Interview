@@ -113,7 +113,44 @@
 
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$jawab = $this->input->post('answer');
-				$system_answer = $this->User_model->get_system_answer();
+				$get_sa1 = $this->User_model->get_system_answer1();
+				$get_sa2 = $this->User_model->get_system_answer2();
+				$get_sa3 = $this->User_model->get_system_answer3();
+				$get_sa4 = $this->User_model->get_system_answer4();
+				$get_sa5 = $this->User_model->get_system_answer5();
+				$get_sa6 = $this->User_model->get_system_answer6();
+				
+				$system_answer = array();
+					foreach ($get_sa1 as $key => $value) 
+					{
+						$system_answer[$key] = $value["system_answer"];
+					}
+				$system_answer2 = array();
+					foreach ($get_sa2 as $key => $value) 
+					{
+						$system_answer2[$key] = $value["system_answer2"];
+					}
+				$system_answer3 = array();
+					foreach ($get_sa3 as $key => $value) 
+					{
+						$system_answer3[$key] = $value["system_answer3"];
+					}
+				$system_answer4 = array();
+					foreach ($get_sa4 as $key => $value) 
+					{
+						$system_answer4[$key] = $value["system_answer4"];
+					}
+				$system_answer5 = array();
+					foreach ($get_sa5 as $key => $value) 
+					{
+						$system_answer5[$key] = $value["system_answer5"];
+					}
+				$system_answer6 = array();
+					foreach ($get_sa6 as $key => $value) 
+					{
+						$system_answer6[$key] = $value["system_answer6"];
+					}
+
 				$stop_word = $this->User_model->get_stopword();
 				$stopword = array();
 
@@ -124,107 +161,172 @@
 						$stopword[] = $value1;
 					}
 				}
-
 				foreach ($jawab as $value){
 					$answer [] = $value;
 				}
 
-				foreach ($answer as $key => $value) 
-				{
-					$parser[] = strtolower(preg_replace('/[^a-zA-Z ]/', '',$value));
-				}
-				foreach ($parser as $key => $value) 
-				{
-					$filter[] = preg_replace('/\b('.implode('|',$stopword).')\b/','',$value);
-				}
+				$parse_answer  = parser($answer);
+		 		$parse_answer1 = parser($system_answer);
+		 		$parse_answer2 = parser($system_answer2);
+		 		$parse_answer3 = parser($system_answer3);
+		 		$parse_answer4 = parser($system_answer4);
+		 		$parse_answer5 = parser($system_answer5);
+		 		$parse_answer6 = parser($system_answer6);
+		 		 		
+		 		$filter_answer  = filter($parse_answer, $stopword);
+		 		// var_dump($filter_answer);
+		 		// exit;
+		 		$filter_answer1 = filter($parse_answer1, $stopword);
+		 		$filter_answer2 = filter($parse_answer2, $stopword);
+		 		$filter_answer3 = filter($parse_answer3, $stopword);
+		 		$filter_answer4 = filter($parse_answer4, $stopword);
+		 		$filter_answer5 = filter($parse_answer5, $stopword);
+		 		$filter_answer6 = filter($parse_answer6, $stopword);
+
+		 		$steamming_answer = steamming($filter_answer);
+		 		$steamming_answer1 = steamming($filter_answer1);
+		 		$steamming_answer2 = steamming($filter_answer2);
+		 		$steamming_answer3 = steamming($filter_answer3);
+		 		$steamming_answer4 = steamming($filter_answer4);
+		 		$steamming_answer5 = steamming($filter_answer5);
+		 		$steamming_answer6 = steamming($filter_answer6);
+
+		 		$no_space_answer = no_space($steamming_answer);
+		 		$no_space_answer1 = no_space($steamming_answer1);
+		 		$no_space_answer2 = no_space($steamming_answer2);
+		 		$no_space_answer3 = no_space($steamming_answer3);
+		 		$no_space_answer4 = no_space($steamming_answer4);
+		 		$no_space_answer5 = no_space($steamming_answer5);
+		 		$no_space_answer6 = no_space($steamming_answer6);
+
+		 		$kgram_2_answer = kgram_2($no_space_answer);
+		 		$kgram_2_answer1 = kgram_2($no_space_answer1);
+		 		$kgram_2_answer2 = kgram_2($no_space_answer2);
+		 		$kgram_2_answer3 = kgram_2($no_space_answer3);
+		 		$kgram_2_answer4 = kgram_2($no_space_answer4);
+		 		$kgram_2_answer5 = kgram_2($no_space_answer5);
+		 		$kgram_2_answer6 = kgram_2($no_space_answer6);
+
+		 		$change_to_ascii_indek_0_answer = change_to_ascii_indek_0($kgram_2_answer);
+		 		$change_to_ascii_indek_0_answer1 = change_to_ascii_indek_0($kgram_2_answer1);
+		 		$change_to_ascii_indek_0_answer2 = change_to_ascii_indek_0($kgram_2_answer2);
+		 		$change_to_ascii_indek_0_answer3 = change_to_ascii_indek_0($kgram_2_answer3);
+		 		$change_to_ascii_indek_0_answer4 = change_to_ascii_indek_0($kgram_2_answer4);
+		 		$change_to_ascii_indek_0_answer5 = change_to_ascii_indek_0($kgram_2_answer5);
+		 		$change_to_ascii_indek_0_answer6 = change_to_ascii_indek_0($kgram_2_answer6);
+		 		
+		 		$change_to_ascii_indek_1_answer = change_to_ascii_indek_1($kgram_2_answer);
+		 		$change_to_ascii_indek_1_answer1 = change_to_ascii_indek_1($kgram_2_answer1);
+		 		$change_to_ascii_indek_1_answer2 = change_to_ascii_indek_1($kgram_2_answer2);
+		 		$change_to_ascii_indek_1_answer3 = change_to_ascii_indek_1($kgram_2_answer3);
+		 		$change_to_ascii_indek_1_answer4 = change_to_ascii_indek_1($kgram_2_answer4);
+		 		$change_to_ascii_indek_1_answer5 = change_to_ascii_indek_1($kgram_2_answer5);
+		 		$change_to_ascii_indek_1_answer6 = change_to_ascii_indek_1($kgram_2_answer6);
+
+		 		$plus_indek_0_and_indek_1_answer  = plus_indek_0_and_indek_1($no_space_answer,  $change_to_ascii_indek_0_answer,   $change_to_ascii_indek_1_answer);
+		 		$plus_indek_0_and_indek_1_answer1 = plus_indek_0_and_indek_1($no_space_answer1, $change_to_ascii_indek_0_answer1, $change_to_ascii_indek_1_answer1);
+		 		$plus_indek_0_and_indek_1_answer2 = plus_indek_0_and_indek_1($no_space_answer2, $change_to_ascii_indek_0_answer2, $change_to_ascii_indek_1_answer2);
+		 		$plus_indek_0_and_indek_1_answer3 = plus_indek_0_and_indek_1($no_space_answer3, $change_to_ascii_indek_0_answer3, $change_to_ascii_indek_1_answer3);
+		 		$plus_indek_0_and_indek_1_answer4 = plus_indek_0_and_indek_1($no_space_answer4, $change_to_ascii_indek_0_answer4, $change_to_ascii_indek_1_answer4);
+		 		$plus_indek_0_and_indek_1_answer5 = plus_indek_0_and_indek_1($no_space_answer5, $change_to_ascii_indek_0_answer5, $change_to_ascii_indek_1_answer5);
+		 		$plus_indek_0_and_indek_1_answer6 = plus_indek_0_and_indek_1($no_space_answer6, $change_to_ascii_indek_0_answer6, $change_to_ascii_indek_1_answer6);
+
+		 		$count_same_value_answer1 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer1);
+		 		$count_same_value_answer2 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer2);
+		 		$count_same_value_answer3 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer3);
+		 		$count_same_value_answer4 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer4);
+		 		$count_same_value_answer5 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer5);
+		 		$count_same_value_answer6 = count_same_value($plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer6);
+
+		 		$sum_array_answer1 = sum_array($no_space_answer, $no_space_answer1, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer1);
+		 		$sum_array_answer2 = sum_array($no_space_answer, $no_space_answer2, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer2);
+		 		$sum_array_answer3 = sum_array($no_space_answer, $no_space_answer3, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer3);
+		 		$sum_array_answer4 = sum_array($no_space_answer, $no_space_answer4, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer4);
+		 		$sum_array_answer5 = sum_array($no_space_answer, $no_space_answer5, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer5);
+		 		$sum_array_answer6 = sum_array($no_space_answer, $no_space_answer6, $plus_indek_0_and_indek_1_answer, $plus_indek_0_and_indek_1_answer6);
+
+		 		$textSimilarity1 = textSimilarity($count_same_value_answer1, $sum_array_answer1);
+		 		$textSimilarity2 = textSimilarity($count_same_value_answer2, $sum_array_answer2);
+		 		$textSimilarity3 = textSimilarity($count_same_value_answer3, $sum_array_answer3);
+		 		$textSimilarity4 = textSimilarity($count_same_value_answer4, $sum_array_answer4);
+		 		$textSimilarity5 = textSimilarity($count_same_value_answer5, $sum_array_answer5);
+		 		$textSimilarity6 = textSimilarity($count_same_value_answer6, $sum_array_answer6);
 				
-				foreach ($filter as $key => $value) 
-				{
-					$stm[] = str_word_count($value, 1);
-				}
 
-				foreach ($stm as $key => $value) 
-				{
-					foreach ($value as $key1 => $value1) 
+			 		$compare = array();
+					foreach ($textSimilarity1 as $key => $value) 
 					{
-						$stmm[$key][]= hapusakhiran(hapusawalan2(hapusawalan1(hapuspp(hapuspartikel($value1))))); 
-					}
-				}
-				foreach ($stmm as $key => $value) 
-				{
-					$steamming[]= implode(' ', $value); 
-				}
-				var_dump($stemming);
-				exit();
-				foreach ($steamming as $key => $value) 
-				{
-					$no_space[] = preg_replace('/\s+/', '', $value);
-				}
-				 		for($i = 0; $i < count($no_space); $i++)
-				{
-				$kgram_2[$i] = array();				    
-					for($j = 0; $j < (strlen($no_space[$i]) - 1); $j++)
-					{	
-					   $kgram_2[$i][] = substr($no_space[$i], $j, 2);
-					}
-				}
-				$change_to_ascii_indek_0 = array();
-				foreach ($kgram_2 as $key => $value) 
-				{
-					foreach ($value as $key1 => $value1) 
-					{
-						$change_to_ascii_indek_0[$key][] = ord($value1[0])*10;
-					}
-				}
-				$change_to_ascii_indek_1 = array();
-				foreach ($kgram_2 as $key => $value) 
-				{
-					foreach ($value as $key1 => $value1) 
-					{
-						$change_to_ascii_indek_1[$key][] = ord($value1[1])*1;
-					}
-				}
-				$plus_indek_0_and_indek_1 = array();
-				for($i = 0; $i < count($no_space); $i++)
-				{
-					for($j = 0; $j < (strlen($no_space[$i]) -1); $j++) 
-					{
-				  		$plus_indek_0_and_indek_1[$i][$j] = $change_to_ascii_indek_0[$i][$j] + $change_to_ascii_indek_1[$i][$j];
-				  	}
-				}
-				$count_same_value = array();
-				foreach ($plus_indek_0_and_indek_1_system as $key => $value) 
-				{
-					$count_same_value[] = count(array_intersect($value, $plus_indek_0_and_indek_1_user[$key]));
-				}
-				$sum_array_user = array();
-					for($i = 0; $i < count($no_space_user); $i++)
-					{
-						for($j = 0; $j < (strlen($no_space_user[$i]) -1); $j++) 
+						if (
+							$value >= $textSimilarity2[$key] &&
+							$value >= $textSimilarity3[$key] &&
+							$value >= $textSimilarity4[$key] &&
+							$value >= $textSimilarity4[$key] &&
+							$value >= $textSimilarity6[$key]
+						   ) 
 						{
-							$sum_array_user[$i] = count($plus_indek_0_and_indek_1_user[$i]);
+							$compare[] = $value;	
+						}
+						else if (
+								 $textSimilarity2 >= $value &&
+								 $textSimilarity2 >= $textSimilarity3 &&
+								 $textSimilarity2 >= $textSimilarity4 &&
+								 $textSimilarity2 >= $textSimilarity5 &&
+								 $textSimilarity2 >= $textSimilarity6 
+								)
+						{
+							$compare[] = $textSimilarity2[$key];
+						}
+						else if (
+								 $textSimilarity3 >= $value &&
+								 $textSimilarity3 >= $textSimilarity2 &&
+								 $textSimilarity3 >= $textSimilarity4 &&
+								 $textSimilarity3 >= $textSimilarity5 &&
+								 $textSimilarity3 >= $textSimilarity6 
+								) 
+						{
+							$compare[] = $textSimilarity3[$key];
+						}
+						else if (
+								 $textSimilarity4 >= $value &&
+								 $textSimilarity4 >= $textSimilarity2 &&
+								 $textSimilarity4 >= $textSimilarity3 &&
+								 $textSimilarity4 >= $textSimilarity5 &&
+								 $textSimilarity4 >= $textSimilarity6 
+								) 
+						{
+							$compare[] = $textSimilarity4[$key];
+						}
+						else if (
+								 $textSimilarity5 >= $value &&
+								 $textSimilarity5 >= $textSimilarity2 &&
+								 $textSimilarity5 >= $textSimilarity3 &&
+								 $textSimilarity5 >= $textSimilarity4 &&
+								 $textSimilarity5 >= $textSimilarity6 
+								) 
+						{
+							$compare[] = $textSimilarity5[$key];
+						}
+						else 
+						{
+							$compare[] = $textSimilarity6[$key];
 						}
 					}
-
-				$sum_array_system = array();
-					for($i = 0; $i < count($no_space_system); $i++)
+					$pembulatan = array();	
+					foreach ($compare as $key => $value) 
 					{
-						for($j = 0; $j < (strlen($no_space_system[$i]) -1); $j++) 
+						if ($value >= 0.5) 
 						{
-							$sum_array_system[$i] = count($plus_indek_0_and_indek_1_system[$i]);
+							$pembulatan[] = 1;
+						}
+						else
+						{
+							$pembulatan[] = 0;
 						}
 					}
-			
-				$sum_array = array();
-					foreach ($sum_array_system as $key => $value) 
-					{
-						$count_rkr[] = $value + $sum_array_user[$key];
-					}
-					$textSimilarity = array();
-				foreach ($sum_array as $key => $value) 
-				{
-					$textSimilarity[] = 2*$count_same_value[$key] / $value;
-				}
+					$result = array_sum($compare);
+					var_dump($result);
+					exit;
+					$anoo = $this->User_model->post_result($result,$sesi);
 			}
 			$soal = $this->Admin_model->read_soal();	
 
