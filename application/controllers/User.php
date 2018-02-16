@@ -106,10 +106,18 @@
 		public function interview(){
 			$this->load->model('Admin_model');
 			$this->load->model('User_model');
+			$sesi = $this->session->username;
+			$hasil = $this->User_model->get_result($sesi);
+			print_r($hasil);
+			// $skor = intval($hasil);
+			// var_dump($skor);
+			exit;
 
-			if (!$sesi = $this->session->username) {
+			if (!$sesi) {
 				redirect('user/login');
 			}
+
+		if ($skor === 88){
 
 			if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				$jawab = $this->input->post('answer');
@@ -323,17 +331,36 @@
 							$pembulatan[] = 0;
 						}
 					}
-					$result = array_sum($compare);
-					var_dump($result);
-					exit;
-					$anoo = $this->User_model->post_result($result,$sesi);
+					$result = array_sum($pembulatan);
+					$query = $this->User_model->post_result($result,$sesi);
+
+					$soal = $this->Admin_model->read_soal();
+
+					$data['soal'] = $soal;
+
+					$this->load->view('templates/user/dashboard');
+					$this->load->view('user/interview',$data);
+					$this->load->view('templates/user/footer');
 			}
-			$soal = $this->Admin_model->read_soal();	
+		}
+		 else {
 
-			$data['soal'] = $soal;
+			if ($skor >= 5 && $skor <11) 
+				{
+				$data['status'] = "Anda sudah mengerjakan test dengan status : LULUS";
 
-			$this->load->view('templates/user/dashboard');
-			$this->load->view('user/interview',$data);
-			$this->load->view('templates/user/footer');
+				$this->load->view('templates/user/dashboard');
+				$this->load->view('user/interview',$data);
+				$this->load->view('templates/user/footer');
+				}
+				else
+				{
+				$data['status'] = "Anda sudah mengerjakan test dengan status : TIDAK LULUS";
+						
+				$this->load->view('templates/user/dashboard');
+				$this->load->view('user/interview',$data);
+				$this->load->view('templates/user/footer');
+				}
+			}
 		}			
 	}

@@ -134,7 +134,7 @@ function parser($answer)
 		$sum_array = array();
 			foreach ($sum_array_system as $key => $value) 
 			{
-				$count_rkr[] = $value + $sum_array_user[$key];
+				$sum_array[] = $value + $sum_array_user[$key];
 			}
 
 		return $sum_array;

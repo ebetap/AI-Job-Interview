@@ -6,7 +6,7 @@
 		}
 
 		public function registrasi($ktp,$nama,$username,$email,$gender,$pass){
-		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass, 'result' => -1));
+		$query = $this->db->insert('t_user', array('noktp' => $ktp,'fullname' => $nama,'username' => $username,'email' => $email,'gender' => $gender,'password' => $pass));
 		return $query;
 		}
 		
@@ -74,6 +74,11 @@
 			$row = $query->row_array();
 			 
 			return $row;
+		}
+		public function get_result($sesi){
+			$query =$this->db->query("SELECT result FROM t_user WHERE username='$sesi'");
+
+			return $query->num_rows();
 		}
 		public function post_result($result,$sesi){
 			$this->db->set('result', $result, FALSE);
