@@ -75,13 +75,25 @@
 			 
 			return $row;
 		}
+		public function get_status($sesi){
+			$query =$this->db->query("SELECT status FROM t_user WHERE username='$sesi'");
+			$row = $query->row();
+			return  $row->status;
+		}
 		public function get_result($sesi){
 			$query =$this->db->query("SELECT result FROM t_user WHERE username='$sesi'");
-
-			return $query->num_rows();
+			$row = $query->row();
+			return  $row->result;
 		}
 		public function post_result($result,$sesi){
 			$this->db->set('result', $result, FALSE);
+			$this->db->where('username', $sesi);
+			$query = $this->db->update('t_user');
+			
+			return $query;
+		}
+		public function post_status($status,$sesi){
+			$this->db->set('status', $status);
 			$this->db->where('username', $sesi);
 			$query = $this->db->update('t_user');
 			

@@ -85,19 +85,4 @@
 
 			return $query;
 		}
-		public function result_lolos(){
-			$query = $this->db->query('SELECT result FROM t_user WHERE result >= 5');
-			$row = $query->num_rows();
-			return $row;
-		}
-		public function result_gagal(){
-			$query = $this->db->query('SELECT result FROM t_user WHERE result  BETWEEN 0 AND 5');
-			$row = $query->num_rows();
-			return $row;			
-		}
-		public function result_belum(){
-			$query = $this->db->query('SELECT result FROM t_user WHERE result <0');
-			$row = $query->num_rows();
-			return $row;			
-		}
 	}

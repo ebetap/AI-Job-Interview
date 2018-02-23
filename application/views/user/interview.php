@@ -16,7 +16,7 @@
             <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST">
               
               <?php
-              if ($status) {
+              if ($status == TRUE) {
               echo $status;
               } else {
                 foreach ( $soal as $var ){
