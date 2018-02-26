@@ -85,4 +85,19 @@
 
 			return $query;
 		}
+		public function result_lolos(){
+			$query = $this->db->query('SELECT result FROM t_user WHERE status = "Lulus"');
+			$row = $query->num_rows();
+			return $row;
+		}
+		public function result_gagal(){
+			$query = $this->db->query('SELECT result FROM t_user WHERE status = "Tidak Lulus"');
+			$row = $query->num_rows();
+			return $row;			
+		}
+		public function result_belum(){
+			$query = $this->db->query('SELECT result FROM t_user WHERE status = "Belum Mengerjakan"');
+			$row = $query->num_rows();
+			return $row;			
+		}
 	}

@@ -94,13 +94,7 @@
                   echo "<td>".$var['email']."</td>";
                   echo "<td>".$var['gender']."</td>";
                   echo "<td>".$var['result']."</td>";
-                  if ($var['result']==-1) {
-                    echo "<td>Belum Mengerjakan</td>";
-                  } else if ($var['result']<=5) {
-                    echo "<td>Lolos</td>";
-                  } else {
-                    echo "<td>Tidak Lolos</td>";
-                  }
+                  echo "<td>".$var['status']."</td>";
                 echo "</tr>";
                 } 
                ?>

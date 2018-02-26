@@ -79,11 +79,9 @@
 			$gagal = $this->Admin_model->result_gagal();
 			$belum = $this->Admin_model->result_belum();
 
-
-			
+			$data['user'] = $read;			
 			$data['lolos'] = $lolos;
 			$data['gagal'] = $gagal;
-			$data['user'] = $read;
 			$data['belum']= $belum;
 
 			$this->load->view('templates/admin/dashboard');
